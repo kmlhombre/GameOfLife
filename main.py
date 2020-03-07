@@ -1,7 +1,7 @@
 from random import randint
 
 # basic parameters of map
-aliveCellsOnStart = 5
+aliveCellsOnStart = 4
 height = 5
 width = 5
 
@@ -14,6 +14,8 @@ def displayMap(map):
 
 
 def letsTheGameBegin(map):
+    global aliveCells
+    nextAliveCells = 0
     while aliveCells > 0:
         copy_map = initMap()
         for x in range(height):
@@ -40,6 +42,7 @@ def letsTheGameBegin(map):
                                 aliveNeighbours += 1
                     if aliveNeighbours == 3:
                         copy_map[x][y] = 'O'
+                        nextAliveCells += 1
                 aliveNeighbours = 0
                 if map[x][y] == 'O':
                     if y > 1:
@@ -60,6 +63,8 @@ def letsTheGameBegin(map):
                                 aliveNeighbours += 1
                     if aliveNeighbours == 2 or aliveNeighbours == 3:
                         copy_map[x][y] = 'O'
+                        nextAliveCells += 1
+        aliveCells = nextAliveCells
         map = copy_map
         displayMap(map)
         print('--------------------------')
@@ -83,12 +88,17 @@ def initGame():
     map = initMap()
 
     # add alive cells
-    for _ in range(aliveCellsOnStart):
-        while True:
-            number = randint(0, 24)
-            if map[int(number/5)][number%5] == 'X':
-                map[int(number/5)][number%5] = 'O'
-                break
+    # for _ in range(aliveCellsOnStart):
+    #   while True:
+    #        number = randint(0, 24)
+    #        if map[int(number/5)][number%5] == 'X':
+    #            map[int(number/5)][number%5] = 'O'
+    #            break
+
+    map[2][3] = 'O'
+    map[2][4] = 'O'
+    map[3][2] = 'O'
+    map[3][3] = 'O'
 
     # display initial map
     displayMap(map)
